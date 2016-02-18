@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 
 public class Minicraft extends ApplicationAdapter {
     final int WIDTH = 100;
@@ -14,7 +15,6 @@ public class Minicraft extends ApplicationAdapter {
     final int CHANGE_WIDTH = WIDTH / 2;
     final int CHANGE_HEIGHT = HEIGHT / 2;
     final int MAX_VELOCITY = 2000;
-
 
     SpriteBatch batch;
     TextureRegion down, up, right, left;
@@ -24,9 +24,17 @@ public class Minicraft extends ApplicationAdapter {
     float y = 0;
     boolean faceRight, faceDown;
 
+    FitViewport fitViewport;
+
+    @Override
+    public void resize(int width, int height) {
+        fitViewport.update(width,height);
+    }
+
     @Override
     public void create () {
         batch = new SpriteBatch();
+        fitViewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         Texture tiles = new Texture("tiles.png");
         TextureRegion[][] grid = TextureRegion.split(tiles, 16, 16);
